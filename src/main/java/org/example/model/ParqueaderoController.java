@@ -56,6 +56,24 @@ public class ParqueaderoController {
 
     }
 
+    public String salidaVehiculo(String placa) {
+        String resultado = "Vehículo no encontrado.";
+
+        for (int i = 0; i < vehiculos.length; i++) {
+
+            if (vehiculos[i] != null && vehiculos[i].getPlaca().equals(placa)) {
+                int numeroParqueadero = vehiculos[i].getNumeroParqueadero();
+                resultado = "Vehículo con placa " + placa + " salió del parqueadero en espacio: "+ numeroParqueadero;
+                vehiculos[i] = null;
+                break;
+
+            }
+        }
+
+        return resultado;
+    }
+
+
     public String mostrarVehiculos() {
         String lista = "\nEstado actual del parqueadero:\n\n";
 
