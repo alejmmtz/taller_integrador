@@ -9,6 +9,8 @@ public class ParqueaderoController {
     private static final String ARCHIVO_DATOS = "parqueadero.dat";
     private static final int ESPACIO_MAX = 20;
     private int espacios;
+    private static int vehiculosEnIngreso;
+    private static int vehiculosEnSalida;
 
     public ParqueaderoController() {
         this.vehiculos = new Vehiculo[ESPACIO_MAX];
@@ -48,6 +50,7 @@ public class ParqueaderoController {
         vehiculos[index] = nuevoVehiculo;
 
         Bitacora.registrarMovimiento("INGRESO", placa, numeroParqueadero, "EXITOSO");
+        vehiculosEnIngreso++;
 
         return "Vehiculo exitosamente registrado: \n"+vehiculos[index].toString();
 
