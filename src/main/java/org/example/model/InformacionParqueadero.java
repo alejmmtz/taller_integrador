@@ -19,8 +19,10 @@ public class InformacionParqueadero {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
             writer.write(mensajeIngreso);
             writer.newLine();
+
             writer.write(mensajeSalida);
             writer.newLine();
+
             writer.write(fechaRegistro);
             writer.newLine();
 

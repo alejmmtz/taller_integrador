@@ -65,6 +65,7 @@ public class ParqueaderoController {
                 int numeroParqueadero = vehiculos[i].getNumeroParqueadero();
                 resultado = "Vehículo con placa " + placa + " salió del parqueadero en espacio: "+ numeroParqueadero;
                 vehiculos[i] = null;
+                vehiculosEnSalida++;
                 break;
 
             }
