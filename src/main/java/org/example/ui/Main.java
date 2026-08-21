@@ -2,11 +2,13 @@ package org.example.ui;
 
 import org.example.model.ParqueaderoController;
 import org.example.model.Bitacora;
+import org.example.model.InformacionParqueadero;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import org.example.exceptions.EspacioOcupadoException;
+import org.example.exceptions.VehiculoNoEncontradoException;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,8 +22,9 @@ public class Main {
             System.out.println("2. Dar Salida a Vehículo");
             System.out.println("3. Listar Vehículos Parqueados");
             System.out.println("4. Ver Bitácora de Movimientos");
-            System.out.println("5. Guardar y Salir \n");
-            System.out.print("Seleccione una opción \n");
+            System.out.println("5. Ver Información del Parqueadero");
+            System.out.println("6. Guardar y Salir \n");
+            System.out.print("Seleccione una opción: ");
 
             try {
                 int opcion = scanner.nextInt();
@@ -32,10 +35,10 @@ public class Main {
                         System.out.println("Registro de datos del Vehiculo \n");
 
                         System.out.print("Placa del vehiculo: ");
-                        String placa = scanner.nextLine();
+                        String placa = scanner.nextLine().toUpperCase();
 
-                        System.out.print("Tipo de vehiculo(MOTO/CARRO): ");
-                        String tipo = scanner.nextLine();
+                        System.out.print("Tipo de vehiculo (MOTO/CARRO): ");
+                        String tipo = scanner.nextLine().toUpperCase();
 
                         int espacio = -1;
                         boolean espacioValido = false;
@@ -54,8 +57,8 @@ public class Main {
 
                         try {
                             System.out.println(controller.registrarVehiculo(placa, tipo, espacio));
-                        } catch (IllegalArgumentException | EspacioOcupadoException e) {
-                            System.out.println("ERROR -> ( " + e.getMessage() + " )");
+                        } catch (EspacioOcupadoException e) {
+                            System.out.println("ERROR: " + e.getMessage());
                         }
 
                         break;
@@ -64,9 +67,13 @@ public class Main {
                         System.out.println("Ingresa Placa del Vehiculo a dar Salida \n");
 
                         System.out.print("Placa del vehiculo: ");
-                        String placaSalida = scanner.nextLine();
+                        String placaSalida = scanner.nextLine().toUpperCase();
 
-                        System.out.println(controller.salidaVehiculo(placaSalida));
+                        try {
+                            System.out.println(controller.salidaVehiculo(placaSalida));
+                        } catch (VehiculoNoEncontradoException e) {
+                            System.out.println("ERROR: " + e.getMessage());
+                        }
 
                         break;
 
@@ -79,6 +86,10 @@ public class Main {
                         break;
 
                     case 5:
+                        InformacionParqueadero.mostrarInformacion();
+                        break;
+
+                    case 6:
                         salir = true;
                         controller.guardarEstado();
                         System.out.println("Sesión cerrada.");

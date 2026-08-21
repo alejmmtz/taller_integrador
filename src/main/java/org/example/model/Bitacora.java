@@ -1,14 +1,23 @@
 package org.example.model;
 
 import java.io.*;
+import java.time.LocalDateTime;
 
 public class Bitacora {
-
     private static final String ARCHIVO = "bitacora.txt";
 
     public static void registrarMovimiento(String accion, String placa, int espacio, String resultado) {
-   
-        String mensaje = accion + " - " + placa + " - " + " Espacio: "+ espacio + " - " + resultado;
+        String fecha = "[" + LocalDateTime.now() + "]";
+
+        String espacioTexto;
+        if (espacio == -1) {
+            espacioTexto = "N/A";
+        } else {
+            espacioTexto = String.valueOf(espacio);
+        }
+
+        String mensaje = fecha + " " + accion + " - " + placa + " - " + " Espacio: " +
+                espacioTexto + " - " + resultado;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
             writer.write(mensaje);
@@ -26,12 +35,11 @@ public class Bitacora {
             return;
         }
 
-        System.out.println("\nBITACORA");
+        System.out.println("\nBITACORA\n");
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO))) {
             String linea;
-
-            while((linea = reader.readLine()) != null) {
+            while ((linea = reader.readLine()) != null) {
                 System.out.println(linea);
             }
         } catch (IOException e) {
@@ -39,4 +47,3 @@ public class Bitacora {
         }
     }
 }
-
